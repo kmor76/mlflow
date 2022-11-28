@@ -1,0 +1,14 @@
+FROM python:3.10.6-bullseye
+
+ENV MLFLOW_PORT_NUMBER "5000"
+ENV MLFLOW_BACKEND_STORE_URI ""
+ENV MLFLOW_ARTIFACTS_DESTINATION ""
+
+RUN pip install mlflow[extras] psycopg2-binary
+
+EXPOSE $MLFLOW_PORT_NUMBER
+
+CMD [ \
+"sh", "-c", \
+"mlflow server --host 0.0.0.0 --port $MLFLOW_PORT_NUMBER --backend-store-uri $MLFLOW_BACKEND_STORE_URI --artifacts-destination $MLFLOW_ARTIFACTS_DESTINATION --serve-artifacts" \
+]
